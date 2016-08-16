@@ -5,3 +5,7 @@
 .p_main {
   margin-top: 20px;
 }
+
+.p_main nav {
+  display: none;
+}
