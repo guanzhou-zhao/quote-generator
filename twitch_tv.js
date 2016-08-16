@@ -40,9 +40,10 @@ var load_sublist = function(evt) {
             data.streams.reduce(function(preV, stream) {
                 if (col_pre_row == 0) {
                   row = $("<div>").addClass("row")
+                  col_pre_row = 3
                 }
-                var col = $("<div>").addClass("col-md-" + 12 / col_pre_row).appendTo(row)
-
+                var col = $("<div>").addClass("col-md-" + 12 / 3).appendTo(row)
+                col_pre_row--
                 var thumbnail = $("<div>").addClass("thumbnail").appendTo(col)
 
                 var image = $("<img>").attr("src", stream.preview.medium).attr("alt", stream.game).appendTo(thumbnail)
