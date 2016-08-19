@@ -15,8 +15,11 @@ var make_menu = function() {
             if (propName == "streams") {
                 list_item.addClass("active")
             }
-            list_item.click(load_sublist)
-
+            if (propName == "user" || propName == "channel" || propName == "search") {
+              list_item.click(load_prompt)
+            } else {
+              list_item.click(load_sublist)
+            }
             list.append(list_item)
             return list;
         }, list)
@@ -24,18 +27,40 @@ var make_menu = function() {
         $(".p_nav .container").append(list);
     })
 }
+var load_prompt = function (evt) {
+  evt.preventDefault()
+  $(".p_main .container").find(".row, .alert").remove()
+  $(".p_main nav .pager li:first-child").children().eq(0).hide()
+  $(".p_main nav .pager li:last-child").children().eq(0).hide()
+  var errorMsg = $("<div>").addClass("alert alert-danger").attr("role", "alert")
+  errorMsg.text("Unauthorized" + "! " + "Token invalid or missing required scope" + ".")
 
+  var promptMsg = $("<div>").addClass("alert alert-info").attr("role", "alert")
+  promptMsg.text("Please do try other menu buttons.")
+
+  $(".p_main .container").append(errorMsg).append(promptMsg)
+}
 var load_sublist = function(evt) {
     evt.preventDefault();
-    // Clear previously loaded data
-    $(".p_main .container .row").remove()
 
     var main = $(".p_main .container")
+    // Clear previously loaded data
+    main.find(".row, .alert").remove()
     var target = $(evt.target)
     $.ajax({
         url: target.attr("href"),
         type: "GET",
         dataType: "json",
+        // error: function(jqXHR, textStatus, errorThrown) {
+        //   var errorMsg = $("<div>").addClass("alert alert-danger").attr("role", "alert")
+        //   errorMsg.text(textStatus + "! " + errorThrown + ".")
+        //
+        //   var promptMsg = $("div").addClass("alert alert-info").attr("role", "alert")
+        //   promptMsg.text("Please do try other menu buttons.")
+        //
+        //   main.append(errorMsg).append(promptMsg)
+        //   return
+        // },
         success: function(data) {
             console.log(data)
                 // make pagination
