@@ -139,7 +139,7 @@ var load_sublist = function(evt) {
 
                 caption.append($("<h3>").text(caption_text))
 
-                var data_text = "This Tweet content text \"" + caption_text + "\" is from twitch api."
+                var data_text = "\" " + caption_text + " \". (Content from dev.twitch.tv API)"
 
                 var tweet_button = $("<a>")
                 tweet_button.attr("href", "https://twitter.com/share")
