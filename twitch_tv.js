@@ -16,9 +16,9 @@ var make_menu = function() {
                 list_item.addClass("active")
             }
             if (propName == "user" || propName == "channel" || propName == "search") {
-              list_item.click(load_prompt)
+                list_item.click(load_prompt)
             } else {
-              list_item.click(load_sublist)
+                list_item.click(load_sublist)
             }
             list.append(list_item)
             return list;
@@ -27,24 +27,24 @@ var make_menu = function() {
         $(".p_nav .container").append(list);
     })
 }
-var load_prompt = function (evt) {
-  evt.preventDefault()
-  $(".p_main .container").find(".row, .alert").remove()
-  $(".p_main nav .pager li:first-child").children().eq(0).hide()
-  $(".p_main nav .pager li:last-child").children().eq(0).hide()
-  var errorMsg = $("<div>").addClass("alert alert-danger").attr("role", "alert")
-  errorMsg.text("Unauthorized" + "! " + "Token invalid or missing required scope" + ".")
+var load_prompt = function(evt) {
+    evt.preventDefault()
+    $(".p_main .container").find(".row, .alert").remove()
+    $(".p_main nav .pager li:first-child").children().eq(0).hide()
+    $(".p_main nav .pager li:last-child").children().eq(0).hide()
+    var errorMsg = $("<div>").addClass("alert alert-danger").attr("role", "alert")
+    errorMsg.text("Unauthorized" + "! " + "Token invalid or missing required scope" + ".")
 
-  var promptMsg = $("<div>").addClass("alert alert-info").attr("role", "alert")
-  promptMsg.text("Please do try other menu buttons.")
+    var promptMsg = $("<div>").addClass("alert alert-info").attr("role", "alert")
+    promptMsg.text("Please do try other menu buttons.")
 
-  $(".p_main .container").append(errorMsg).append(promptMsg)
+    $(".p_main .container").append(errorMsg).append(promptMsg)
 }
 var load_sublist = function(evt) {
     evt.preventDefault();
 
     var main = $(".p_main .container")
-    // Clear previously loaded data
+        // Clear previously loaded data
     main.find(".row, .alert").remove()
     var target = $(evt.target)
     $.ajax({
@@ -75,8 +75,8 @@ var load_sublist = function(evt) {
                     prev_link.attr("href", data._links.prev)
 
                     // Add click event listener only if there is no listener added
-                    if ( !$._data( prev_link[0], "events") ) {
-                      prev_link.click(load_sublist)
+                    if (!$._data(prev_link[0], "events")) {
+                        prev_link.click(load_sublist)
                     }
                 } else {
                     prev_link.hide()
@@ -87,8 +87,8 @@ var load_sublist = function(evt) {
                     next_link.attr("href", data._links.next)
 
                     // Add click event listener only if there is no listener added
-                    if (!$._data( next_link[0], "events")){
-                      next_link.click(load_sublist)
+                    if (!$._data(next_link[0], "events")) {
+                        next_link.click(load_sublist)
                     }
                 } else {
                     next_link.hide()
@@ -97,7 +97,7 @@ var load_sublist = function(evt) {
                 pagination.hide()
             }
 
-            //Generate html for loaded data
+            //Generate html element for loaded data
             var data_name
             if (data.streams) {
                 data_name = "streams"
@@ -139,9 +139,25 @@ var load_sublist = function(evt) {
 
                 caption.append($("<h3>").text(caption_text))
 
+                var data_text = "This Tweet content text \"" + caption_text + "\" is from twitch api."
+
+                var tweet_button = $("<a>")
+                tweet_button.attr("href", "https://twitter.com/share")
+                    .addClass("twitter-share-button")
+                    .attr("data-size", "large")
+                    .attr("data-text", data_text)
+                    .attr("data-via", "guanzhou_z")
+                    .attr("data-hashtags", "quote_generator")
+                    .attr("data-related", "DevAcademyNZ,guanzhou_z")
+                    .attr("data-show-count", "false")
+                    .text("Tweet")
+
+                caption.append($("<p>").append(tweet_button))
                 return main.append(row)
             }, main)
 
+            main.find("script").remove()
+            main.append($("<script async src=\"https://platform.twitter.com/widgets.js\" charset=\"utf-8\"></script>"))
         }
     })
 }
