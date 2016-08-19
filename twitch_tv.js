@@ -15,13 +15,14 @@ var make_menu = function() {
             if (propName == "streams") {
                 list_item.addClass("active")
             }
-                list_item.click(load_sublist)
+            list_item.click(load_sublist)
 
             list.append(list_item)
             return list;
         }, list)
 
         $(".p_nav .container").append(list);
+        $("li.active a").click()
     })
 }
 
@@ -40,16 +41,16 @@ var load_sublist = function(evt) {
     // for the leading 3 menu button, don't run ajax method
     var button_name = target.text()
     if (button_name == "user" || button_name == "channel" || button_name == "search") {
-      main.find("nav").hide()
-      
-      var errorMsg = $("<div>").addClass("alert alert-danger").attr("role", "alert")
-      errorMsg.text("Unauthorized" + "! " + "Token invalid or missing required scope" + ".")
+        main.find("nav").hide()
 
-      var promptMsg = $("<div>").addClass("alert alert-info").attr("role", "alert")
-      promptMsg.text("Please do try other menu buttons.")
+        var errorMsg = $("<div>").addClass("alert alert-danger").attr("role", "alert")
+        errorMsg.text("Unauthorized" + "! " + "Token invalid or missing required scope" + ".")
 
-      $(".p_main .container").append(errorMsg).append(promptMsg)
-      return
+        var promptMsg = $("<div>").addClass("alert alert-info").attr("role", "alert")
+        promptMsg.text("Please do try other menu buttons.")
+
+        $(".p_main .container").append(errorMsg).append(promptMsg)
+        return
     }
 
     $.ajax({
@@ -57,12 +58,12 @@ var load_sublist = function(evt) {
         type: "GET",
         dataType: "json",
         beforeSend: function() {
-          $(".loading").show();
-          $(".p_main nav").hide();
+            $(".loading").show();
+            $(".p_main nav").hide();
         },
         complete: function() {
-          $(".loading").hide();
-          $(".p_main nav").show();
+            $(".loading").hide();
+            $(".p_main nav").show();
         },
         // error: function(jqXHR, textStatus, errorThrown) {
         //   var errorMsg = $("<div>").addClass("alert alert-danger").attr("role", "alert")
