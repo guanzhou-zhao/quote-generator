@@ -51,6 +51,14 @@ var load_sublist = function(evt) {
         url: target.attr("href"),
         type: "GET",
         dataType: "json",
+        beforeSend: function() {
+          $(".loading").show();
+          $(".p_main nav").hide();
+        },
+        complete: function() {
+          $(".loading").hide();
+          $(".p_main nav").show();
+        },
         // error: function(jqXHR, textStatus, errorThrown) {
         //   var errorMsg = $("<div>").addClass("alert alert-danger").attr("role", "alert")
         //   errorMsg.text(textStatus + "! " + errorThrown + ".")

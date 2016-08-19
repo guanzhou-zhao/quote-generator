@@ -9,3 +9,10 @@
 .p_main nav {
   display: none;
 }
+
+.loading {
+  background: url("loading-giphy.gif") no-repeat center;
+  background-size: 150px 150px;
+  height: 150px;
+  display: none;
+}
