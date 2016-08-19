@@ -63,7 +63,6 @@ var load_sublist = function(evt) {
         },
         complete: function() {
             $(".loading").hide();
-            $(".p_main nav").show();
         },
         // error: function(jqXHR, textStatus, errorThrown) {
         //   var errorMsg = $("<div>").addClass("alert alert-danger").attr("role", "alert")
